@@ -8,8 +8,11 @@ jobs:
   echo-stuff:
     runs-on: ubuntu-latest
     steps:
-    - run: |
-        echo "Github Context: ${{ github }}"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CONTEXT"
+
   identify-commenter:
     runs-on: ubuntu-latest
     outputs:

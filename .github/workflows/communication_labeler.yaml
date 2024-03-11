@@ -5,10 +5,17 @@ on:
     types: [created]
 
 jobs:
-  job1:
+  echo-stuff:
     runs-on: ubuntu-latest
     steps:
-    - id: is-team-1
+    - run: |
+        echo "Github Context: ${{ github }}"
+  identify-commenter:
+    runs-on: ubuntu-latest
+    outputs:
+      team_member: ${{ steps.is-team-member.outputs.team_member }}
+    steps:
+    - id: is-team-member
       uses: morfien101/actions-authorized-user@v3
       with:
         # The username or list of usernames to check
@@ -19,25 +26,24 @@ jobs:
         org: ${{ github.repository_owner }}
         # The github token to use. Must have at least 'org:read' scope.
         github_token: ${{ secrets.PAT_FOR_ORG }}
-    - id: output-from-team-1
+    - id: output-from-is-team-member
       run: |
         echo "output from team 1:"
-        echo "authorized: ${{ steps.is-team-1.outputs.authorized }}"
-        echo "team_member: ${{ steps.is-team-1.outputs.team_member }}"
-    
-    - id: is-team-2
-      uses: morfien101/actions-authorized-user@v3
+        echo "authorized: ${{ steps.is-team-member.outputs.authorized }}"
+        echo "team_member: ${{ steps.is-team-member.outputs.team_member }}"
+  team-response:
+    runs-on: ubuntu-latest
+    needs: [identify-commenter]
+    if: needs.identify-commenter.team_member == 'true'
+    steps:
+    - uses: actions-ecosystem/action-remove-labels@v1
       with:
-        # The username or list of usernames to check
-        username: ${{ github.actor }}
-        # The team name to check
-        team: "team2"
-        # The organization to check
-        org: ${{ github.repository_owner }}
-        # The github token to use. Must have at least 'org:read' scope.
-        github_token: ${{ secrets.PAT_FOR_ORG }}
-    - id: output-from-team-2
-      run: |
-        echo "output from team 2:"
-        echo "authorized: ${{ steps.is-team-2.outputs.authorized }}"
-        echo "team_member: ${{ steps.is-team-2.outputs.team_member }}"
+        labels: coms/needs-team-response
+  reporter-response:
+    runs-on: ubuntu-latest
+    needs: [identify-commenter]
+    if: needs.identify-commenter.team_member != 'true' && 
+    steps:
+    - uses: actions-ecosystem/action-remove-labels@v1
+      with:
+        labels: coms/needs-team-response

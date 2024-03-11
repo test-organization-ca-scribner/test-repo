@@ -8,23 +8,36 @@ jobs:
   job1:
     runs-on: ubuntu-latest
     steps:
-    - uses: morfien101/actions-authorized-user@v3
+    - id: is-team-1
+      uses: morfien101/actions-authorized-user@v3
       with:
         # The username or list of usernames to check
         username: ${{ github.actor }}
         # The team name to check
         team: "team1"
         # The organization to check
-        org: ${{ github.repo_owner }}
+        org: ${{ github.repository_owner }}
         # The github token to use. Must have at least 'org:read' scope.
         github_token: ${{ github.token }}
-    - uses: morfien101/actions-authorized-user@v3
+    - id: output-from-team-1
+      run: |
+        echo "output from team 1:"
+        echo "authorized: ${{ steps.is-team-1.outputs.authorized }}"
+        echo "team_member: ${{ steps.is-team-1.outputs.team_member }}"
+    
+    - id: is-team-2
+      uses: morfien101/actions-authorized-user@v3
       with:
         # The username or list of usernames to check
         username: ${{ github.actor }}
         # The team name to check
         team: "team2"
         # The organization to check
-        org: ${{ github.repo_owner }}
+        org: ${{ github.repository_owner }}
         # The github token to use. Must have at least 'org:read' scope.
         github_token: ${{ github.token }}
+    - id: output-from-team-2
+      run: |
+        echo "output from team 2:"
+        echo "authorized: ${{ steps.is-team-2.outputs.authorized }}"
+        echo "team_member: ${{ steps.is-team-2.outputs.team_member }}"

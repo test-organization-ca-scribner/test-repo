@@ -18,7 +18,7 @@ jobs:
         # The organization to check
         org: ${{ github.repository_owner }}
         # The github token to use. Must have at least 'org:read' scope.
-        github_token: ${{ github.token }}
+        github_token: ${{ secrets.PAT_FOR_ORG }}
     - id: output-from-team-1
       run: |
         echo "output from team 1:"
@@ -35,7 +35,7 @@ jobs:
         # The organization to check
         org: ${{ github.repository_owner }}
         # The github token to use. Must have at least 'org:read' scope.
-        github_token: ${{ github.token }}
+        github_token: ${{ secrets.PAT_FOR_ORG }}
     - id: output-from-team-2
       run: |
         echo "output from team 2:"

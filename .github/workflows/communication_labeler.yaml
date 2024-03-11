@@ -1,0 +1,30 @@
+name: Communication labeler
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  job1:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: morfien101/actions-authorized-user@v3
+      with:
+        # The username or list of usernames to check
+        username: ${{ github.actor }}
+        # The team name to check
+        team: "team1"
+        # The organization to check
+        org: ${{ github.repo_owner }}
+        # The github token to use. Must have at least 'org:read' scope.
+        github_token: ${{ github.token }}
+    - uses: morfien101/actions-authorized-user@v3
+      with:
+        # The username or list of usernames to check
+        username: ${{ github.actor }}
+        # The team name to check
+        team: "team2"
+        # The organization to check
+        org: ${{ github.repo_owner }}
+        # The github token to use. Must have at least 'org:read' scope.
+        github_token: ${{ github.token }}

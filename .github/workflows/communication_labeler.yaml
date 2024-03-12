@@ -41,7 +41,7 @@ jobs:
         echo "team_member: ${{ steps.is-team-member.outputs.team_member }}"
     - id: is-reporter
       run: |
-        echo "github.event.comment.user.login = ${{ github.event.comment.user.login"
+        echo "github.event.comment.user.login = ${{ github.event.comment.user.login }}"
         echo "github.event.issue.user.login = ${{ github.event.issue.user.login }}"
         IS_REPORTER="${{ github.event.comment.user.login == github.event.issue.user.login }}"
         echo "is_reporter=$IS_REPORTER"

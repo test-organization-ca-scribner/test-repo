@@ -47,6 +47,14 @@ jobs:
         echo "is_reporter=$IS_REPORTER"
         echo "{is_reporter}=$IS_REPORTER" >> "$GITHUB_OUTPUT"
 
+  echo-identify-commenter:
+    runs-on: ubuntu-latest
+    needs: [identify-commenter]
+    steps:
+    - run: |
+        echo needs.identify-commenter.team_member = ${{ needs.identify-commenter.team_member }}
+        echo needs.identify-commenter.is_reporter = ${{ needs.identify-commenter.is_reporter }}
+
   team-response:
     runs-on: ubuntu-latest
     needs: [identify-commenter]

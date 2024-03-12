@@ -45,7 +45,7 @@ jobs:
         echo "github.event.issue.user.login = ${{ github.event.issue.user.login }}"
         IS_REPORTER="${{ github.event.comment.user.login == github.event.issue.user.login }}"
         echo "is_reporter=$IS_REPORTER"
-        echo "{is_reporter}=$IS_REPORTER" >> "$GITHUB_OUTPUT"
+        echo "is_reporter=$IS_REPORTER" >> "$GITHUB_OUTPUT"
 
   echo-identify-commenter:
     runs-on: ubuntu-latest

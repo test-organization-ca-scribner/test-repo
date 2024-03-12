@@ -13,6 +13,10 @@ jobs:
           GITHUB_CONTEXT: ${{ toJSON(github) }}
         run: echo "$GITHUB_CONTEXT"
 
+  
+
+
+
   identify-commenter:
     runs-on: ubuntu-latest
     outputs:
@@ -34,6 +38,10 @@ jobs:
         echo "output from team 1:"
         echo "authorized: ${{ steps.is-team-member.outputs.authorized }}"
         echo "team_member: ${{ steps.is-team-member.outputs.team_member }}"
+    - id: is-reporter
+      run: |
+        echo "is-reporter: ${{ github.event.comment.user.login  == github.event.issue.user.login }}
+
   team-response:
     runs-on: ubuntu-latest
     needs: [identify-commenter]

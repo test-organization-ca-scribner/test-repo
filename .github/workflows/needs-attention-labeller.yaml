@@ -1,0 +1,20 @@
+# Test of the https://github.com/marketplace/actions/needs-attention action
+name: Needs-attention Labeller
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  applyNeedsAttentionLabel:
+    name: Apply Needs Attention Label
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply Needs Attention Label
+        uses: hramos/needs-attention@v2
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          response-required-label: 'coms/needs-reporter-response-2'
+          needs-attention-label: 'coms/needs-team-response-2'
+

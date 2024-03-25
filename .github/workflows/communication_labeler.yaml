@@ -62,7 +62,7 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-remove-labels@v1
       with:
-        labels: coms/needs-team-response
+        labels: coms/needs-team-response-manual
   reporter-response:
     runs-on: ubuntu-latest
     needs: [identify-commenter]
@@ -70,7 +70,7 @@ jobs:
     steps:
     - uses: actions-ecosystem/action-remove-labels@v1
       with:
-        labels: coms/needs-reporter-response
+        labels: coms/needs-reporter-response-manual
     - uses: actions-ecosystem/action-add-labels@v1
       with:
-        labels: coms/needs-team-response
+        labels: coms/needs-team-response-manual

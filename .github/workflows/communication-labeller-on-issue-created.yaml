@@ -1,0 +1,10 @@
+name: Communication labeler calling out to workflow_call
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  label-communication:
+    name: use workflow_call 
+    uses: ./.github/workflows/communication-labeller-on-workflow-call.yaml

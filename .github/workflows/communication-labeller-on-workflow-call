@@ -1,0 +1,30 @@
+# Reusable workflow for managing communication labels.
+# This workflow manages the issue labels:
+# * 
+# * 
+# Manages communication labels on the issues of this repository.  
+# * coms/needs-reporter-response
+# * coms/needs-team-response
+#
+# If the original reporter of an issue that has the label "coms/needs-reporter-response"
+# comments on the issue, this workflow removes that label and replaces it with
+# "coms/needs-team-response".  This lets us mark issues with "coms/needs-reporter-response"
+# when we ask for more information, and filter issues on "coms/needs-team-response" to
+# action issues where the reporter has responded.
+name: Needs-attention Labeller
+
+on:
+  workflow_call:
+
+jobs:
+  applyNeedsResponseLabels:
+    name: Apply Needs Response Labels
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply Needs Response Labels
+        uses: hramos/needs-attention@v2.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          response-required-label: 'coms/needs-reporter-response-workflow-call'
+          needs-attention-label: 'coms/needs-team-response-workflow-call'
